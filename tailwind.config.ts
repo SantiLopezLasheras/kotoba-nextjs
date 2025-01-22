@@ -13,6 +13,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        colors: {
+          logoColor: "#1F2125",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

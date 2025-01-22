@@ -1,6 +1,8 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/Header";
 import "./globals.css";
+import Footer from "@/components/Footer";
+import { inter } from "@/app/ui/fonts";
 
 export const metadata = {
   title: "kotoba",
@@ -13,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body>
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -22,6 +24,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
