@@ -6,16 +6,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const FormSchemaLista = z.object({
-  id: z.string(),
   idioma: z.string(),
   nivel: z.coerce.number(),
   nombreLista: z.string(),
 });
 
-const CrearListaNueva = FormSchemaLista.omit({ id: true });
-
 export async function crearListaNueva(formData: FormData) {
-  const { idioma, nivel, nombreLista } = CrearListaNueva.parse({
+  const { idioma, nivel, nombreLista } = FormSchemaLista.parse({
     idioma: formData.get("idioma"),
     nivel: formData.get("nivel"),
     nombreLista: formData.get("nombreLista"),
@@ -41,7 +38,6 @@ const FormSchemaTarjeta = z.object({
   lista_id: z.string(),
 });
 
-const CrearTarjetaNueva = FormSchemaTarjeta.omit({ id: true });
 export async function crearTarjetaNueva(formData: FormData) {
   const {
     palabra,
@@ -51,14 +47,18 @@ export async function crearTarjetaNueva(formData: FormData) {
     cat_gramatical,
     idioma,
     lista_id,
-  } = CrearTarjetaNueva.parse({
-    palabra: formData.get("palabra"),
-    cat_gramatical: formData.get("cat_gramatical"),
-    traduccion: formData.get("traduccion"),
-    frase_ejemplo: formData.get("frase_ejemplo"),
-    pronunciacion: formData.get("pronunciacion"),
-    idioma: formData.get("idioma"),
-    lista_id: formData.get("lista_id"),
+  } = FormSchemaTarjeta.parse({
+    palabra: (formData.get("palabra") as string) || "",
+    cat_gramatical: (formData.get("cat_gramatical") as string) || "",
+    traduccion: (formData.get("traduccion") as string) || "",
+    frase_ejemplo: formData.get("frase_ejemplo")
+      ? (formData.get("frase_ejemplo") as string)
+      : "",
+    pronunciacion: formData.get("pronunciacion")
+      ? (formData.get("pronunciacion") as string)
+      : "",
+    idioma: (formData.get("idioma") as string) || "",
+    lista_id: (formData.get("lista_id") as string) || "",
   });
 
   await sql`
