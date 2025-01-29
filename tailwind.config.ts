@@ -15,6 +15,8 @@ export default {
       colors: {
         colors: {
           logoColor: "#1F2125",
+          buttonColor: "#FF4081",
+          buttonColorHover: "#8E44AD",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
