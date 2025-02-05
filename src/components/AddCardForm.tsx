@@ -55,7 +55,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
     <div className="flex justify-center gap-8 max-w-7xl mx-auto">
       <form
         action={crearTarjetaNueva}
-        className="bg-white text-black rounded shadow-md p-5 mb-8 w-full max-w-md"
+        className="bg-white  text-black rounded shadow-md p-5 mb-8 w-full max-w-md"
       >
         <input type="hidden" name="lista_id" value={listaId} />
         <h3 className="text-3xl font-bold mb-4 text-center">
@@ -70,7 +70,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             type="text"
             id="palabra"
             name="palabra"
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.palabra}
             onChange={handleChange}
             required
@@ -88,7 +88,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             type="text"
             id="traduccion"
             name="traduccion"
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.traduccion}
             onChange={handleChange}
             required
@@ -106,7 +106,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             type="text"
             id="cat_gramatical"
             name="cat_gramatical"
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.cat_gramatical}
             onChange={handleChange}
           />
@@ -123,7 +123,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             type="text"
             id="frase_ejemplo"
             name="frase_ejemplo"
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.frase_ejemplo}
             onChange={handleChange}
           />
@@ -140,7 +140,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             type="text"
             id="pronunciacion"
             name="pronunciacion"
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.pronunciacion}
             onChange={handleChange}
           />
@@ -154,7 +154,7 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             type="text"
             id="idioma"
             name="idioma"
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.idioma}
             onChange={handleChange}
             required

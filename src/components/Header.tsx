@@ -1,11 +1,15 @@
-import { NotebookPen, BookOpenCheck, Gamepad2 } from "lucide-react";
-import { auth } from "@/auth";
+import {
+  NotebookPen,
+  BookOpenCheck,
+  Gamepad2,
+  LogIn,
+  LogOut,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { NavButton } from "@/components/NavButton";
 import { ModeToggle } from "@/components/ModeToggle";
-import SignInButton from "./SignInButton";
-import { SignOutButton } from "./SignOutButton";
+import { auth, signOut } from "@/auth";
 
 export async function Header() {
   const session = await auth();
@@ -39,8 +43,34 @@ export async function Header() {
         <NavButton href="/juegos" label="Juegos" icon={Gamepad2} />
         <NavButton href="/listas" label="Listas" icon={BookOpenCheck} />
         <NavButton href="/blog" label="Blog" icon={NotebookPen} />
-        {!session && <SignInButton />}
-        {session && <SignOutButton />}
+
+        {/* Comprobar si el usuario ha iniciado sesión */}
+        {!session ? (
+          <Link
+            href="/login"
+            className="bg-green-500 hover:bg-green-600 flex items-center gap-2 px-3 py-2 rounded-md shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out"
+          >
+            Iniciar sesión
+            <LogIn className="h-5 w-5" />
+          </Link>
+        ) : (
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/" });
+            }}
+          >
+            <button
+              type="submit"
+              className="bg-red-500 hover:bg-red-600 flex items-center gap-2 px-3 py-2 rounded-md shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out"
+            >
+              Cerrar sesión
+              <LogOut className="h-5 w-5" />
+            </button>
+          </form>
+        )}
+
+        {/* Modo oscuro */}
         <ModeToggle />
       </div>
     </header>

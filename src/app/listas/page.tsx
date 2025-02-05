@@ -106,31 +106,42 @@ export default function Listas() {
                 Nivel: {lista.nivel}
               </p>
 
-              {/* Ver contenido de la lista*/}
-              <Link
-                href={`/listas/${lista.id}`}
-                className="flex gap-2 bg-colors-logoColor text-white p-2 my-2 rounded"
-              >
-                <span>Ir a la lista</span>
-                <Eye />
-              </Link>
+              <div className="text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
+                {/* Ver contenido de la lista*/}
+                <Link
+                  href={`/listas/${lista.id}`}
+                  className="flex justify-between items-center bg-green-500 hover:bg-green-600 text-white p-2 my-2 rounded"
+                >
+                  <span>Ir a la lista</span>
+                  <Eye />
+                </Link>
 
-              {/* Editar detalles de la lista */}
-              <Link
-                href={`/listas/editar/${lista.id}`}
-                className="flex gap-2 bg-blue-500 text-white p-2 my-2 rounded"
-              >
-                <span>Editar</span>
-                <Edit2 />
-              </Link>
-              {/* Borrar lista */}
-              <button
-                onClick={() => handleDelete(lista.id)}
-                className="flex gap-2 bg-red-500 text-white p-2 my-2 rounded"
-              >
-                <span>Eliminar</span>
-                <Trash />
-              </button>
+                {/* Repasar lista*/}
+                <Link
+                  href={`/juegos/repasar/${lista.id}`}
+                  className="flex justify-between items-center bg-orange-500 hover:bg-orange-600 text-white p-2 my-2 rounded"
+                >
+                  <span>Repasar</span>
+                  <Eye />
+                </Link>
+
+                {/* Editar detalles de la lista */}
+                <Link
+                  href={`/listas/editar/${lista.id}`}
+                  className="flex justify-between items-center bg-blue-500 hover:bg-blue-600 text-white p-2 my-2 rounded"
+                >
+                  <span>Editar</span>
+                  <Edit2 />
+                </Link>
+                {/* Borrar lista */}
+                <button
+                  onClick={() => handleDelete(lista.id)}
+                  className="flex justify-between items-center bg-red-500 hover:bg-red-600 text-white p-2 my-2 rounded"
+                >
+                  <span>Eliminar</span>
+                  <Trash />
+                </button>
+              </div>
             </div>
           </div>
         ))}

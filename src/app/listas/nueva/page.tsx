@@ -10,40 +10,49 @@ const NuevaLista = () => {
 
       <form action={crearListaNueva} className="space-y-4">
         <div>
-          <label htmlFor="idioma" className="block text-lg font-semibold">
+          <label
+            htmlFor="idioma"
+            className="block text-black text-lg font-semibold"
+          >
             Idioma
           </label>
           <input
             id="idioma"
             name="idioma"
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full text-black bg-slate-200 p-3 border border-gray-300 rounded-lg"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="nombreLista" className="block text-lg font-semibold">
+          <label
+            htmlFor="nombreLista"
+            className="block text-black text-lg font-semibold"
+          >
             Nombre de la lista
           </label>
           <input
             id="nombreLista"
             name="nombreLista"
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full text-black bg-slate-200 p-3 border border-gray-300 rounded-lg"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="nivel" className="block text-lg font-semibold">
+          <label
+            htmlFor="nivel"
+            className="block text-black text-lg font-semibold"
+          >
             Nivel
           </label>
           <input
             id="nivel"
             name="nivel"
             type="text"
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full text-black bg-slate-200 p-3 border border-gray-300 rounded-lg"
             required
             min="1"
             max="5"
