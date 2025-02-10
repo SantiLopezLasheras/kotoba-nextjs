@@ -176,7 +176,7 @@ export async function editarTarjeta(id: string, formData: FormData) {
 
 export async function eliminarTarjeta(cardId: number) {
   try {
-    await sql`DELETE FROM tarjetas WHERE card_id = ${cardId}`;
+    await sql`DELETE FROM tarjetas WHERE card_id = ${cardId} RETURNING *`;
     return { message: "Tarjeta eliminada" };
   } catch (error) {
     console.log(error);

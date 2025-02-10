@@ -46,13 +46,16 @@ export async function fetchListaByID(id: string) {
 // }
 
 // TARJETAS
-const ITEMS_PER_PAGE = 10;
-export async function fetchTarjetas(currentPage: number, listaId: number) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+export async function fetchTarjetas(
+  currentPage: number,
+  listaId: number,
+  itemsPerPage = 10
+) {
+  const offset = (currentPage - 1) * itemsPerPage;
 
   try {
     const tarjetas =
-      await sql<Tarjeta>`SELECT * FROM tarjetas WHERE lista_id = ${listaId} ORDER BY card_id DESC LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+      await sql<Tarjeta>`SELECT * FROM tarjetas WHERE lista_id = ${listaId} ORDER BY card_id DESC LIMIT ${itemsPerPage} OFFSET ${offset}`;
 
     return tarjetas.rows;
   } catch (error) {
