@@ -60,7 +60,7 @@ export default function Juegos() {
             <div className="mt-auto flex justify-center">
               <Link
                 className="text-colors-buttonColorHover font-bold hover:underline"
-                href="/juegos/drag-drop"
+                href="/juegos/dragdrop"
               >
                 Jugar
               </Link>

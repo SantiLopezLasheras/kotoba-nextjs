@@ -20,6 +20,7 @@ export default function Tarjetas() {
   const [tarjetas, setTarjetas] = useState<Tarjeta[]>([]);
   const [selectedTarjeta, setSelectedTarjeta] = useState<Tarjeta | null>(null);
   const [listaNombre, setListaNombre] = useState<string>("");
+
   const [isAddingCard, setIsAddingCard] = useState(false);
   const { id } = useParams() as { id: string };
 
@@ -67,7 +68,7 @@ export default function Tarjetas() {
       );
 
       if (response.ok) {
-        // Quitar tarjeta eliminada de la UI
+        // Remove the deleted card from the UI
         setTarjetas(tarjetas.filter((t) => t.card_id !== tarjeta.card_id));
         setIsAddingCard(false);
         setSelectedTarjeta(null);
@@ -84,7 +85,8 @@ export default function Tarjetas() {
         {listaNombre || "Cargando nombre del mazo..."}
       </h2>
 
-      <div className="flex flex-col lg:flex-row mt-5">
+      <div className="flex flex-col lg:flex-row mt-5 gap-6">
+        {/* Left Column - List of Cards */}
         <div className="w-full lg:w-1/3 p-5 space-y-6">
           <div className="flex justify-start mb-5">
             <button
@@ -94,17 +96,17 @@ export default function Tarjetas() {
               Añadir Tarjeta
             </button>
           </div>
-          <div id="card-list" className="space-y-5">
+          <div id="card-list" className="space-y-6">
             {tarjetas.map((tarjeta) => (
               <li
                 key={tarjeta.card_id}
-                className="w-full max-w-sm bg-white text-black shadow-md p-4 cursor-pointer flex justify-between items-center"
+                className="w-full max-w-[450px] bg-white text-black shadow-lg p-5 cursor-pointer flex justify-between items-center rounded-lg transition-all duration-300 hover:shadow-xl"
                 onClick={() => handleCardClick(tarjeta)}
               >
                 <span className="text-xl font-semibold">
                   {tarjeta.palabra.toUpperCase()}
                 </span>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                   <button
                     className="flex items-center bg-colors-buttonColor text-white py-2 px-4 rounded hover:bg-colors-buttonColorHover transition duration-300"
                     onClick={(e) => {
@@ -129,6 +131,8 @@ export default function Tarjetas() {
               </li>
             ))}
           </div>
+
+          {/* Pagination */}
           <Pagination>
             <PaginationContent>
               <PaginationItem>
@@ -147,16 +151,20 @@ export default function Tarjetas() {
           </Pagination>
         </div>
 
-        <div className="w-full lg:w-2/3 p-5">
-          {isAddingCard ? (
-            <AddCardForm listaId={id} tarjeta={selectedTarjeta} />
-          ) : selectedTarjeta ? (
-            <TarjetaDetail tarjeta={selectedTarjeta} />
-          ) : (
-            <p className="text-center text-xl text-gray-500">
-              Selecciona una tarjeta para previsualizarla
-            </p>
-          )}
+        {/* Right Column - Card Detail */}
+        <div className="w-full lg:w-2/3 p-5 mt-12 flex flex-col justify-between">
+          {/* Ensure the content is aligned vertically */}
+          <div className="flex-1">
+            {isAddingCard ? (
+              <AddCardForm listaId={id} tarjeta={selectedTarjeta} />
+            ) : selectedTarjeta ? (
+              <TarjetaDetail tarjeta={selectedTarjeta} />
+            ) : (
+              <p className="text-center text-xl text-gray-500">
+                Selecciona una tarjeta para previsualizarla
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </>

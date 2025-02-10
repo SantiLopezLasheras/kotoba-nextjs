@@ -39,24 +39,18 @@ export default function RepasarMazo() {
     return cards.sort(() => Math.random() - 0.5);
   };
 
-  // // Set flashcards (or fetch them if needed)
-  // useEffect(() => {
-  //   // Here you can fetch the flashcards based on the `id` if needed
-  //   setFlashcards(shuffleCards(mockFlashcards)); // Mock data shuffle
-  // }, [id]);
-
   const nextCard = () => {
     setCurrentIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
-      if (nextIndex >= flashcards.length) return 0; // Loop back to start
+      if (nextIndex >= flashcards.length) return 0;
       return nextIndex;
     });
-    setMostrar(false); // Reset the card to the front after moving to the next one
+    setMostrar(false);
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-center text-3xl p-5">
+    <div className="container mx-auto p-4 mb-6">
+      <h1 className="text-center text-3xl p-5 mb-5">
         Repasar Mazo {id ? id : "Cargando..."}
       </h1>
 
@@ -95,8 +89,8 @@ export default function RepasarMazo() {
             </div>
             {!mostrar && (
               <Image
-                width={250}
-                height={250}
+                width={200}
+                height={200}
                 src="/images/interrogation.webp"
                 alt="interrogantes"
                 className="my-4 rounded-md mx-auto"
@@ -109,21 +103,25 @@ export default function RepasarMazo() {
           <h2 className="text-2xl font-bold pt-5">Nada que mostrar todavía</h2>
           <p>Deberías añadir algunas tarjetas primero...</p>
           <Image
-            width={500}
-            height={500}
-            className="w-2/5 mx-auto py-5"
+            width={400}
+            height={400}
+            className="w-1/4 mx-auto py-5 rounded-md"
             src="/images/not-found-1024x1024.png"
             alt="no hay nada que mostrar"
           />
         </div>
       )}
 
-      <button
-        onClick={nextCard}
-        className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all"
-      >
-        Siguiente
-      </button>
+      {flashcards.length > 0 && (
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={nextCard}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all"
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
 
       <Link href={`/listas`} className="mt-4 block text-center text-blue-500">
         Volver a las listas
