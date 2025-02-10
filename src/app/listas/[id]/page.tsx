@@ -70,11 +70,7 @@ export default function Tarjetas() {
         // Quitar tarjeta eliminada de la UI
         setTarjetas(tarjetas.filter((t) => t.card_id !== tarjeta.card_id));
         setIsAddingCard(false);
-
-        // Call the revalidate API route (esto no funciona)
-        const revalidateResponse = await fetch(`/api/revalidate/${id}`);
-        const revalidateResult = await revalidateResponse.json();
-        console.log(revalidateResult);
+        setSelectedTarjeta(null);
       } else {
         alert("Error al eliminar la tarjeta.");
       }
@@ -89,7 +85,7 @@ export default function Tarjetas() {
       </h2>
 
       <div className="flex flex-col lg:flex-row mt-5">
-        <div className="w-full lg:w-1/3 p-5">
+        <div className="w-full lg:w-1/3 p-5 space-y-6">
           <div className="flex justify-start mb-5">
             <button
               className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition duration-300"
@@ -98,7 +94,7 @@ export default function Tarjetas() {
               Añadir Tarjeta
             </button>
           </div>
-          <div id="card-list" className="space-y-4">
+          <div id="card-list" className="space-y-5">
             {tarjetas.map((tarjeta) => (
               <li
                 key={tarjeta.card_id}

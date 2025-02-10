@@ -1,12 +1,36 @@
-import { crearListaNueva } from "@/app/lib/actions";
-import Link from "next/link";
+"use client";
 
-const Page = () => {
+import { State, editarLista } from "@/app/lib/actions";
+import { useState } from "react";
+import Link from "next/link";
+import { Lista } from "../lib/definitions";
+
+interface EditarListaFormProps {
+  lista: Lista;
+}
+
+export default function EditarListaForm({ lista }: EditarListaFormProps) {
+  const initialState: State = { message: null, errors: {} };
+  const [state, setState] = useState(initialState);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const result = await editarLista(lista.id, formData);
+
+    if (result?.errors) {
+      setState({ ...state, errors: result.errors, message: result.message });
+    } else {
+      setState({ ...state, message: "Lista actualizada correctamente" });
+    }
+  };
+
   return (
     <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-3xl text-center mb-6">Crear una lista nueva</h1>
+      <h1 className="text-3xl text-center mb-6">Editar Lista</h1>
 
-      <form action={crearListaNueva} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
             htmlFor="idioma"
@@ -19,6 +43,7 @@ const Page = () => {
             name="idioma"
             type="text"
             className="w-full text-black bg-slate-200 p-3 border border-gray-300 rounded-lg"
+            defaultValue={lista.idioma}
             required
           />
         </div>
@@ -35,6 +60,7 @@ const Page = () => {
             name="nombreLista"
             type="text"
             className="w-full text-black bg-slate-200 p-3 border border-gray-300 rounded-lg"
+            defaultValue={lista.nombre}
             required
           />
         </div>
@@ -49,8 +75,9 @@ const Page = () => {
           <input
             id="nivel"
             name="nivel"
-            type="text"
+            type="number"
             className="w-full text-black bg-slate-200 p-3 border border-gray-300 rounded-lg"
+            defaultValue={lista.nivel}
             required
             min="1"
             max="5"
@@ -65,15 +92,13 @@ const Page = () => {
             Cancelar
           </Link>
           <button
-            className="bg-colors-buttonColor  text-white  rounded-lg hover:bg-colors-buttonColorHover transition duration-300 px-3"
+            className="bg-colors-buttonColor text-white rounded-lg hover:bg-colors-buttonColorHover transition duration-300 px-3"
             type="submit"
           >
-            Crear lista
+            Guardar cambios
           </button>
         </div>
       </form>
     </div>
   );
-};
-
-export default Page;
+}

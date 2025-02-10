@@ -15,7 +15,7 @@ export async function fetchListas() {
 }
 
 // Recuperar una lista por ID
-export async function fetchListaByID(id: number) {
+export async function fetchListaByID(id: string) {
   try {
     const data = await sql<Lista>`SELECT * FROM listas WHERE id = ${id}`;
     return data.rows[0];
@@ -26,42 +26,24 @@ export async function fetchListaByID(id: number) {
 }
 
 // Comprobar si una lista está vacía
-export async function comprobarContenidoLista(id: number) {
-  try {
-    const result = await sql`
-      SELECT COUNT(*) AS numero_tarjetas
-      FROM tarjetas
-      WHERE lista_id = ${id}
-    `;
+// export async function comprobarContenidoLista(id: number) {
+//   try {
+//     const result = await sql`
+//       SELECT COUNT(*) AS numero_tarjetas
+//       FROM tarjetas
+//       WHERE lista_id = ${id}
+//     `;
 
-    if (result.rowCount === 0) {
-      return null; // Lista no encontrada
-    }
+//     if (result.rowCount === 0) {
+//       return null; // Lista no encontrada
+//     }
 
-    return result.rows[0].numero_tarjetas;
-  } catch (error) {
-    console.error("Error al buscar la lista:", error);
-    throw new Error("Error al buscar la lista");
-  }
-}
-
-// Eliminar una lista
-export async function eliminarLista(id: number) {
-  try {
-    const result = await sql`
-      DELETE FROM listas
-      WHERE id = ${id}
-      RETURNING *;
-    `;
-
-    if (result.rowCount === 0) {
-      return null; // Lista no encontrada
-    }
-  } catch (error) {
-    console.error("Error al borrar la lista: ", error);
-    throw new Error("Error al borrar la lista");
-  }
-}
+//     return result.rows[0].numero_tarjetas;
+//   } catch (error) {
+//     console.error("Error al buscar la lista:", error);
+//     throw new Error("Error al buscar la lista");
+//   }
+// }
 
 // TARJETAS
 const ITEMS_PER_PAGE = 10;
@@ -76,5 +58,47 @@ export async function fetchTarjetas(currentPage: number, listaId: number) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch tarjetas.");
+  }
+}
+
+export async function fetchListaNombre(
+  listaId: number
+): Promise<string | null> {
+  try {
+    const lista = await sql<{ nombre: string }>`
+      SELECT nombre
+      FROM listas
+      WHERE id = ${listaId}
+      LIMIT 1
+    `;
+
+    return lista.rows.length > 0 ? lista.rows[0].nombre : null;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch list name.");
+  }
+}
+
+// ESTADÍSTICAS
+export async function fetchTotales() {
+  try {
+    const totalListasQuery = await sql`
+      SELECT COUNT(*) FROM listas;
+    `;
+    const totalTarjetasQuery = await sql`
+      SELECT COUNT(*) FROM tarjetas;
+    `;
+    const totalUsuariosQuery = await sql`
+      SELECT COUNT(*) FROM users;
+    `;
+
+    const totalListas = totalListasQuery.rows[0].count;
+    const totalTarjetas = totalTarjetasQuery.rows[0].count;
+    const totalUsuarios = totalUsuariosQuery.rows[0].count;
+
+    return { totalListas, totalTarjetas, totalUsuarios };
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Error al recuperar los datos de la base de datos.");
   }
 }

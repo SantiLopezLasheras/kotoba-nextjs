@@ -4,6 +4,7 @@ import {
   Gamepad2,
   LogIn,
   LogOut,
+  ChartNoAxesCombined,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,7 +16,7 @@ export async function Header() {
   const session = await auth();
 
   return (
-    <header className="animate-slide bg-colors-logoColor flex justify-between">
+    <header className="animate-slide bg-slate-200 dark:bg-colors-logoColor flex justify-between">
       <Image
         src="/images/kotoba.png"
         alt="logo de la aplicación"
@@ -36,6 +37,10 @@ export async function Header() {
         <div className="flex gap-2 items-center">
           <Link href="/blog">Blog</Link>
           <NotebookPen size={24} />
+        </div>
+        <div className="flex gap-2 items-center">
+          <Link href="/dashboard">Dashboard</Link>
+          <ChartNoAxesCombined size={24} />
         </div>
       </div>
 

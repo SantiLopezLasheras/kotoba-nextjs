@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { crearTarjetaNueva } from "@/app/lib/actions";
+import { crearTarjetaNueva, editarTarjeta } from "@/app/lib/actions";
 import { Tarjeta } from "@/app/lib/definitions";
 
 interface AddCardFormProps {
@@ -17,8 +17,9 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
     cat_gramatical: "",
     frase_ejemplo: "",
     pronunciacion: "",
-    idioma: "",
   });
+
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     if (tarjeta) {
@@ -29,8 +30,8 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
         cat_gramatical: tarjeta.cat_gramatical || "",
         frase_ejemplo: tarjeta.frase_ejemplo || "",
         pronunciacion: tarjeta.pronunciacion || "",
-        idioma: tarjeta.idioma,
       });
+      setEditing(true);
     } else {
       setFormData({
         palabra: "",
@@ -38,8 +39,8 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
         cat_gramatical: "",
         frase_ejemplo: "",
         pronunciacion: "",
-        idioma: "",
       });
+      setEditing(false);
     }
   }, [tarjeta]);
 
@@ -51,10 +52,22 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
     }));
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formDataObj = new FormData(e.currentTarget);
+
+    if (editing && tarjeta) {
+      await editarTarjeta(tarjeta.card_id, formDataObj);
+    } else {
+      await crearTarjetaNueva(formDataObj);
+    }
+  };
+
   return (
     <div className="flex justify-center gap-8 max-w-7xl mx-auto">
       <form
-        action={crearTarjetaNueva}
+        // action={crearTarjetaNueva}
+        onSubmit={handleSubmit}
         className="bg-white  text-black rounded shadow-md p-5 mb-8 w-full max-w-md"
       >
         <input type="hidden" name="lista_id" value={listaId} />
@@ -143,21 +156,6 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
             className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
             value={formData.pronunciacion}
             onChange={handleChange}
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-sm font-semibold mb-2" htmlFor="idioma">
-            Idioma
-          </label>
-          <input
-            type="text"
-            id="idioma"
-            name="idioma"
-            className="w-full bg-slate-200 p-3 border border-gray-300 rounded-md"
-            value={formData.idioma}
-            onChange={handleChange}
-            required
           />
         </div>
 

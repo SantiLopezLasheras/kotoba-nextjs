@@ -1,77 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { Eye, Plus, Trash, Edit2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Lista } from "../lib/definitions";
+import { Eye, Plus, BookOpenCheck } from "lucide-react";
+import { fetchListas } from "../lib/data";
+import { EditarListaBtn, EliminarListaBtn } from "../ui/buttons";
 
-export default function Listas() {
-  const [listas, setListas] = useState<Lista[]>([]);
-
-  // fetch listas al montar el componente
-  useEffect(() => {
-    getListas();
-  }, []);
-
-  // fetch listas desde la API
-  const getListas = async () => {
-    try {
-      const res = await fetch("/api/listas");
-
-      if (!res.ok) {
-        throw new Error("No se ha conseguido recuperar las listas.");
-      }
-      const listasData = await res.json();
-      setListas(listasData);
-    } catch (error) {
-      console.error("Error fetching listas:", error);
-      alert("Failed to fetch listas");
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    try {
-      // comprobar si la lista esta vacía
-      const res = await fetch(`/api/listas/${id}/comprobar_contenido`);
-      const contenidoLista = await res.json();
-
-      // mostrar mensaje de confirmación diferente dependiendo de si la lista está vacía o no
-      if (contenidoLista.numeroTarjetas > 0) {
-        const confirmaBorrarLista = window.confirm(
-          "¿Seguro que quieres eliminar esta lista con todo su contenido? Con lo que te ha costado añadir todas esas tarjetas..."
-        );
-        if (!confirmaBorrarLista) return;
-      } else {
-        const confirmaBorrarLista = window.confirm(
-          "¿Seguro que quieres eliminar esta lista? Total, no habías añadido nada..."
-        );
-        if (!confirmaBorrarLista) return;
-      }
-
-      // api con la lógica para borrar lista
-      const deleteRes = await fetch(`/api/listas/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!deleteRes.ok) {
-        const errorData = await deleteRes.json();
-        console.log("Error durante la eliminación:", errorData.error);
-        alert(errorData.error || "No se pudo eliminar la lista");
-        return;
-      }
-
-      alert("Otra lista que pereció por el camino... No somos nadie :(");
-
-      const listasActualizadas = listas.filter((lista) => lista.id !== id);
-      setListas(listasActualizadas);
-
-      // hacemos fetch de las listas otra vez
-      getListas();
-    } catch (error) {
-      console.log(error);
-      alert("Failed to delete lista");
-    }
-  };
+export default async function Listas() {
+  const listas = await fetchListas();
 
   return (
     <>
@@ -115,32 +48,19 @@ export default function Listas() {
                   <span>Ir a la lista</span>
                   <Eye />
                 </Link>
-
                 {/* Repasar lista*/}
                 <Link
                   href={`/juegos/repasar/${lista.id}`}
                   className="flex justify-between items-center bg-orange-500 hover:bg-orange-600 text-white p-2 my-2 rounded"
                 >
                   <span>Repasar</span>
-                  <Eye />
+                  <BookOpenCheck />
                 </Link>
-
                 {/* Editar detalles de la lista */}
-                <Link
-                  href={`/listas/editar/${lista.id}`}
-                  className="flex justify-between items-center bg-blue-500 hover:bg-blue-600 text-white p-2 my-2 rounded"
-                >
-                  <span>Editar</span>
-                  <Edit2 />
-                </Link>
+                <EditarListaBtn id={lista.id} />
+
                 {/* Borrar lista */}
-                <button
-                  onClick={() => handleDelete(lista.id)}
-                  className="flex justify-between items-center bg-red-500 hover:bg-red-600 text-white p-2 my-2 rounded"
-                >
-                  <span>Eliminar</span>
-                  <Trash />
-                </button>
+                <EliminarListaBtn id={lista.id} />
               </div>
             </div>
           </div>
