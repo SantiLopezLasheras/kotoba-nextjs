@@ -41,6 +41,9 @@ const Footer = () => {
           </ul>
         </nav>
       </div>
+      <div className="text-center text-sm mt-8">
+        <p>&copy; 2025 KOTOBA. Todos los derechos reservados.</p>
+      </div>
     </footer>
   );
 };

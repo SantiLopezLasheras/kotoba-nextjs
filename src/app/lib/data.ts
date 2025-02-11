@@ -105,3 +105,24 @@ export async function fetchTotales() {
     throw new Error("Error al recuperar los datos de la base de datos.");
   }
 }
+
+export async function fetchListasPorIdioma() {
+  try {
+    const listsPerLanguageQuery = await sql`
+      SELECT idioma, COUNT(*) as total_lists
+      FROM listas
+      GROUP BY idioma
+    `;
+
+    // Map the results into an object format
+    const listsPerLanguage = listsPerLanguageQuery.rows.map((row) => ({
+      idioma: row.idioma,
+      totalLists: row.total_lists,
+    }));
+
+    return listsPerLanguage;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Error al recuperar los datos de la base de datos.");
+  }
+}
