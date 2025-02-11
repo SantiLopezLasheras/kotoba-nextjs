@@ -1,6 +1,6 @@
 import { fetchListasPorIdioma, fetchTotales } from "../lib/data";
 import BarChartComponent from "./BarChart";
-import Piechart from "./piechart";
+import PieChartComponent from "./piechart";
 
 export default async function Page() {
   const data = await fetchTotales();
@@ -31,7 +31,7 @@ export default async function Page() {
               <h2 className="text-xl font-semibold text-center text-[#333] mb-4">
                 Listas Creadas por Idioma
               </h2>
-              <Piechart data={dataPie} />
+              <PieChartComponent data={dataPie} />
             </div>
           </div>
         </div>
