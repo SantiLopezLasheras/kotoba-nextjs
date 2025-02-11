@@ -116,16 +116,16 @@ export default function Page() {
     if (nextIndex < sentences.length) {
       setCurrentSentenceIndex(nextIndex);
       const nextSentence = sentences[nextIndex];
-      setShuffledWords(shuffle([...nextSentence.words])); // Use a copy of the array
-      setUserOrder([...nextSentence.words]); // Reset to correct order
+      setShuffledWords(shuffle([...nextSentence.words]));
+      setUserOrder([...nextSentence.words]);
       setIsChecked(false);
       setShowCorrectOrder(false);
       setIsWrong(false);
     } else {
       setCurrentSentenceIndex(0);
       const firstSentence = sentences[0];
-      setShuffledWords(shuffle([...firstSentence.words])); // Use a copy of the array
-      setUserOrder([...firstSentence.words]); // Reset to correct order
+      setShuffledWords(shuffle([...firstSentence.words]));
+      setUserOrder([...firstSentence.words]);
       setIsChecked(false);
       setShowCorrectOrder(false);
       setIsWrong(false);

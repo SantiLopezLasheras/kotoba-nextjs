@@ -5,12 +5,14 @@ import { klee_one } from "@/app/ui/fonts";
 const Footer = () => {
   return (
     <footer className="bg-slate-300 dark:bg-colors-logoColor text-gray-800 dark:text-white  py-6 mt-auto">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        <div className={`text-2xl ${klee_one.className} antialiased`}>
+      <div className="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4">
+        <div
+          className={`text-2xl ${klee_one.className} antialiased mb-4 sm:mb-0`}
+        >
           K O T O B A
         </div>
         <nav>
-          <ul className="flex space-x-6">
+          <ul className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
             <li>
               <Link href="/" className="hover:text-gray-400">
                 Home

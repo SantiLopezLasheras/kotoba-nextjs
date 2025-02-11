@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main className="bg-gray-100">
       {/* Landing Section */}
-      <section className="flex items-center justify-between py-16 px-8 max-w-screen-xl mx-auto">
-        <div className="w-1/2">
+      <section className="flex flex-col lg:flex-row items-center justify-between py-16 px-8 max-w-screen-xl mx-auto">
+        <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
           <Image
             src="/images/landing.jpg"
             alt="App Landing Image"
@@ -15,8 +15,8 @@ export default function Home() {
             className="rounded-lg shadow-lg"
           />
         </div>
-        <div className="w-1/2 pl-8">
-          <h1 className="text-5xl font-bold mb-4  text-colors-logoColor">
+        <div className="w-full lg:w-1/2 lg:pl-8">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-colors-logoColor">
             Bienvenido a KOTOBA
           </h1>
           <p className="text-lg text-gray-700 mb-6">
@@ -37,10 +37,10 @@ export default function Home() {
         <h2 className="text-3xl font-semibold text-center text-colors-logoColor mb-10">
           Descubre K O T O B A
         </h2>
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-12">
           {/* Feature 1 */}
-          <div className="flex items-center">
-            <div className="w-1/2 pr-8">
+          <div className="flex flex-col sm:flex-row items-center">
+            <div className="w-full sm:w-1/2 mb-4 sm:mb-0 sm:pr-8">
               <Image
                 src="/images/landing.jpg"
                 alt="Feature 1"
@@ -49,7 +49,7 @@ export default function Home() {
                 className="rounded-lg shadow-lg"
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <h3 className="text-xl font-semibold text-colors-logoColor mb-4">
                 Colección de Juegos
               </h3>
@@ -61,8 +61,8 @@ export default function Home() {
           </div>
 
           {/* Feature 2 */}
-          <div className="flex items-center flex-row-reverse">
-            <div className="w-1/2 pl-8">
+          <div className="flex flex-col sm:flex-row-reverse items-center">
+            <div className="w-full sm:w-1/2 mb-4 sm:mb-0 sm:pl-8">
               <Image
                 src="/images/landing.jpg"
                 alt="Feature 2"
@@ -71,7 +71,7 @@ export default function Home() {
                 className="rounded-lg shadow-lg"
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <h3 className="text-xl font-semibold text-colors-logoColor mb-4">
                 Listas Personalizadas
               </h3>
@@ -83,8 +83,8 @@ export default function Home() {
           </div>
 
           {/* Feature 3 */}
-          <div className="flex items-center">
-            <div className="w-1/2 pr-8">
+          <div className="flex flex-col sm:flex-row items-center">
+            <div className="w-full sm:w-1/2 mb-4 sm:mb-0 sm:pr-8">
               <Image
                 src="/images/landing.jpg"
                 alt="Feature 3"
@@ -93,7 +93,7 @@ export default function Home() {
                 className="rounded-lg shadow-lg"
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <h3 className="text-xl font-semibold text-colors-logoColor mb-4">
                 Diario de Aprendizaje
               </h3>
@@ -105,8 +105,8 @@ export default function Home() {
           </div>
 
           {/* Feature 4 */}
-          <div className="flex items-center flex-row-reverse">
-            <div className="w-1/2 pl-8">
+          <div className="flex flex-col sm:flex-row-reverse items-center">
+            <div className="w-full sm:w-1/2 mb-4 sm:mb-0 sm:pl-8">
               <Image
                 src="/images/landing.jpg"
                 alt="Custom Flashcards"
@@ -115,7 +115,7 @@ export default function Home() {
                 className="rounded-lg shadow-lg"
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <h3 className="text-xl font-semibold text-colors-logoColor mb-4">
                 Flashcards
               </h3>

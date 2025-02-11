@@ -21,7 +21,7 @@ export default function RepasarMazo() {
         const data = await response.json();
 
         if (response.ok) {
-          setFlashcards(shuffleCards(data)); // Shuffle cards as per your logic
+          setFlashcards(shuffleCards(data));
         } else {
           console.error(
             "Error fetching flashcards:",
@@ -34,7 +34,6 @@ export default function RepasarMazo() {
     }
   }, [id]);
 
-  // Function to shuffle flashcards
   const shuffleCards = (cards: Tarjeta[]) => {
     return cards.sort(() => Math.random() - 0.5);
   };
@@ -50,15 +49,15 @@ export default function RepasarMazo() {
 
   return (
     <div className="container mx-auto p-4 mb-6">
-      <h1 className="text-center text-3xl p-5 mb-5">
+      <h1 className="text-center text-3xl sm:text-4xl p-5 mb-5">
         Repasar Mazo {id ? id : "Cargando..."}
       </h1>
 
       {flashcards.length > 0 ? (
-        <div className="flex justify-center space-x-6">
-          {/* Front of the card */}
-          <div className="w-[500px] h-72 flex flex-col items-center justify-center bg-white text-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-3xl font-bold text-center mb-4">
+        <div className="flex flex-col sm:flex-row justify-center space-y-6 sm:space-y-0 sm:space-x-6">
+          {/* Parte frontal de la flashcard */}
+          <div className="w-full sm:w-[500px] h-72 flex flex-col items-center justify-center bg-white text-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
               {flashcards[currentIndex].palabra}
             </h2>
 
@@ -70,10 +69,10 @@ export default function RepasarMazo() {
             </button>
           </div>
 
-          {/* Back of the card */}
-          <div className="w-[500px] h-72 bg-white text-gray-800 p-6 rounded-lg shadow-lg">
+          {/* Parte trasera de la flashcard */}
+          <div className="w-full sm:w-[500px] h-72 bg-white text-gray-800 p-6 rounded-lg shadow-lg">
             <div className={mostrar ? "" : "hidden"}>
-              <h2 className="text-center text-3xl font-bold mb-3">
+              <h2 className="text-center text-2xl sm:text-3xl font-bold mb-3">
                 {flashcards[currentIndex].traduccion}
               </h2>
               <p className="font-semibold text-sm italic text-right">
