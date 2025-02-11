@@ -1,6 +1,6 @@
 import { fetchListasPorIdioma, fetchTotales } from "../lib/data";
 import BarChartComponent from "./BarChart";
-import PieChartComponent from "./piechart";
+import PieChartComponent from "./Piechart";
 
 export default async function Page() {
   const data = await fetchTotales();
