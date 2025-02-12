@@ -21,7 +21,7 @@ export default function RepasarMazo() {
         const data = await response.json();
 
         if (response.ok) {
-          setFlashcards(shuffleCards(data));
+          setFlashcards(shuffleCards(data.tarjetas));
         } else {
           console.error(
             "Error fetching flashcards:",

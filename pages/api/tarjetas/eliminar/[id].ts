@@ -5,14 +5,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {
-    query: { id },
-    method,
-  } = req;
+  const { card_id } = req.query;
+  const method = req.method;
 
   if (method === "DELETE") {
     try {
-      await eliminarTarjeta(Number(id));
+      await eliminarTarjeta(Number(card_id));
       res.status(200).json({ message: "Tarjeta eliminada exitosamente" });
     } catch (error) {
       console.error("Error deleting tarjeta:", error);

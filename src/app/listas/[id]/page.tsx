@@ -33,9 +33,9 @@ export default function Tarjetas() {
 
         // asegurarse de que siempre sea un array
         if (Array.isArray(data.tarjetas)) {
-          setTarjetas(data.tarjetas); //
+          setTarjetas(data.tarjetas);
         } else {
-          console.error("Invalid response structure:", data);
+          console.error("No válido:", data);
           setTarjetas([]);
         }
 
@@ -102,7 +102,7 @@ export default function Tarjetas() {
       <div className="flex flex-col lg:flex-row mt-5 gap-6">
         {/* Left Column - List of Cards */}
         <div className="w-full lg:w-1/3 p-5 space-y-6">
-          <div className="flex justify-start mb-5">
+          <div className="flex justify-center mb-5">
             <button
               className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition duration-300"
               onClick={handleAddCard}
@@ -110,6 +110,49 @@ export default function Tarjetas() {
               Añadir Tarjeta
             </button>
           </div>
+          {/* Pagination */}
+          <Pagination className="mt-4">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    if (page <= 1) {
+                      e.preventDefault();
+                      return;
+                    }
+                    handlePaginationChange(page - 1);
+                  }}
+                />
+              </PaginationItem>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (pageNumber) => (
+                  <PaginationItem key={pageNumber}>
+                    <PaginationLink
+                      href="#"
+                      onClick={() => handlePaginationChange(pageNumber)}
+                      isActive={page === pageNumber}
+                    >
+                      {pageNumber}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    if (page >= totalPages) {
+                      e.preventDefault();
+                      return;
+                    }
+                    handlePaginationChange(page + 1);
+                  }}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
           <div id="card-list" className="space-y-6">
             {tarjetas.map((tarjeta) => (
               <li
@@ -145,54 +188,10 @@ export default function Tarjetas() {
               </li>
             ))}
           </div>
-
-          {/* Pagination */}
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={(e) => {
-                    if (page <= 1) {
-                      e.preventDefault(); // Prevent action if we're on the first page
-                      return;
-                    }
-                    handlePaginationChange(page - 1);
-                  }}
-                />
-              </PaginationItem>
-              {/* Page numbers (1, 2, 3, etc.) */}
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (pageNumber) => (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink
-                      href="#"
-                      onClick={() => handlePaginationChange(pageNumber)}
-                      isActive={page === pageNumber}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                )
-              )}
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={(e) => {
-                    if (page >= totalPages) {
-                      e.preventDefault(); // Prevent action if we're on the last page
-                      return;
-                    }
-                    handlePaginationChange(page + 1);
-                  }}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
         </div>
 
         {/* Right Column - Card Detail */}
-        <div className="w-full lg:w-2/3 p-5 mt-12 flex flex-col justify-between">
+        <div className="w-full lg:w-2/3 p-5 mt-12 lg:mt-0 flex flex-col justify-between">
           {/* Ensure the content is aligned vertically */}
           <div className="flex-1">
             {isAddingCard ? (

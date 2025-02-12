@@ -22,12 +22,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           // lógica para verificar si el usuario existe en la base de datos
           const user = await getUserFromDb(email);
+          
 
           if (!user) {
             throw new Error("Usuario no encontrado");
           }
 
-          console.log("Comparing passwords...");
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
           // devuelve un JSON object con los datos del usuario
