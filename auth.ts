@@ -38,6 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
         } catch (error) {
           if (error instanceof ZodError) {
+            console.error("Zod validation error:", error.errors);
             // Devuelve null para indicar que no se pudo iniciar sesión
             return null;
           }

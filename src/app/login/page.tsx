@@ -51,7 +51,7 @@ export default async function Login() {
         </button>
 
         <p className="text-center text-gray-600 dark:text-gray-300 mt-4">
-          ¿No tienes cuenta?{" "}
+          ¿No tienes cuenta?
           <a href="/register" className="text-blue-600 hover:text-blue-700">
             Regístrate aquí
           </a>

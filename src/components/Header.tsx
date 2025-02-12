@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { ModeToggle } from "@/components/ModeToggle";
-import { auth, signOut } from "@/auth";
+import { auth, signOut } from "../../auth";
 
 export async function Header() {
   const session = await auth();

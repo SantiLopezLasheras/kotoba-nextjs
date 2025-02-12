@@ -7,7 +7,7 @@ export default async function Page() {
   const dataPie = await fetchListasPorIdioma();
 
   return (
-    <div className="dark:bg-[#2A2D33] bg-slate-200 transition-colors duration-300">
+    <div className="dark:bg-[#2A2D33] bg-slate-300 transition-colors duration-300">
       <header className="text-white p-5">
         <h1 className="text-center text-3xl font-bold">KOTOBA Dashboard</h1>
       </header>

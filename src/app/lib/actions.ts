@@ -5,7 +5,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { hash } from "bcryptjs";
-import { signIn } from "@/auth";
+import { signIn } from "../../../auth";
 
 /*******************************/
 // LISTAS //
