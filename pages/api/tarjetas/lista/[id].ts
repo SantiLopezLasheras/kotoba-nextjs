@@ -13,8 +13,11 @@ export default async function handler(
   const { page = 1 } = req.query;
 
   try {
-    const tarjetas = await fetchTarjetas(Number(page), Number(id));
-    res.status(200).json(tarjetas);
+    const { tarjetas, totalPages, totalItems } = await fetchTarjetas(
+      Number(page),
+      Number(id)
+    );
+    res.status(200).json({ tarjetas, totalPages, totalItems });
   } catch (error) {
     console.error("Error fetching tarjetas:", error);
     res.status(500).json({

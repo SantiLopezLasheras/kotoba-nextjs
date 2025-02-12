@@ -24,7 +24,7 @@ export default function Home() {
             flashcards para aprender jugando.
           </p>
           <Link
-            href="/listas"
+            href="/register"
             className="bg-colors-logoColor text-white px-6 py-3 rounded-lg text-lg hover:bg-gray-700"
           >
             ¿Empezamos?

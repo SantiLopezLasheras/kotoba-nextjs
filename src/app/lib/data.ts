@@ -57,7 +57,18 @@ export async function fetchTarjetas(
     const tarjetas =
       await sql<Tarjeta>`SELECT * FROM tarjetas WHERE lista_id = ${listaId} ORDER BY card_id DESC LIMIT ${itemsPerPage} OFFSET ${offset}`;
 
-    return tarjetas.rows;
+    const countResult = await sql<{ count: string }>`
+  SELECT COUNT(*) AS count FROM tarjetas WHERE lista_id = ${listaId}
+`;
+
+    const totalItems =
+      countResult.rows.length > 0 ? Number(countResult.rows[0].count) : 0; 
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    console.log("Total Items:", totalItems);
+    console.log("Total Pages:", totalPages);
+
+    return { tarjetas: tarjetas.rows, totalPages, totalItems };
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch tarjetas.");

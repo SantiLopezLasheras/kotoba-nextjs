@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -20,8 +19,10 @@ export default function Tarjetas() {
   const [tarjetas, setTarjetas] = useState<Tarjeta[]>([]);
   const [selectedTarjeta, setSelectedTarjeta] = useState<Tarjeta | null>(null);
   const [listaNombre, setListaNombre] = useState<string>("");
-
   const [isAddingCard, setIsAddingCard] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
   const { id } = useParams() as { id: string };
 
   useEffect(() => {
@@ -29,16 +30,25 @@ export default function Tarjetas() {
       const fetchTarjetasData = async (page = 1) => {
         const response = await fetch(`/api/tarjetas/lista/${id}?page=${page}`);
         const data = await response.json();
-        setTarjetas(data);
+
+        // asegurarse de que siempre sea un array
+        if (Array.isArray(data.tarjetas)) {
+          setTarjetas(data.tarjetas); //
+        } else {
+          console.error("Invalid response structure:", data);
+          setTarjetas([]);
+        }
+
+        setTotalPages(data.totalPages);
 
         const listaResponse = await fetch(`/api/listas/${id}`);
         const listaData = await listaResponse.json();
         setListaNombre(listaData.nombre || `Lista nº ${id}`);
       };
 
-      fetchTarjetasData();
+      fetchTarjetasData(page);
     }
-  }, [id]);
+  }, [id, page]);
 
   const handleCardClick = (tarjeta: Tarjeta) => {
     setSelectedTarjeta(tarjeta);
@@ -68,7 +78,7 @@ export default function Tarjetas() {
       );
 
       if (response.ok) {
-        // Remove the deleted card from the UI
+        // eliminar flashcard de la UI
         setTarjetas(tarjetas.filter((t) => t.card_id !== tarjeta.card_id));
         setIsAddingCard(false);
         setSelectedTarjeta(null);
@@ -76,6 +86,10 @@ export default function Tarjetas() {
         alert("Error al eliminar la tarjeta.");
       }
     }
+  };
+
+  const handlePaginationChange = (newPage: number) => {
+    setPage(newPage);
   };
 
   return (
@@ -136,16 +150,42 @@ export default function Tarjetas() {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious href="#" />
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    if (page <= 1) {
+                      e.preventDefault(); // Prevent action if we're on the first page
+                      return;
+                    }
+                    handlePaginationChange(page - 1);
+                  }}
+                />
               </PaginationItem>
+              {/* Page numbers (1, 2, 3, etc.) */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (pageNumber) => (
+                  <PaginationItem key={pageNumber}>
+                    <PaginationLink
+                      href="#"
+                      onClick={() => handlePaginationChange(pageNumber)}
+                      isActive={page === pageNumber}
+                    >
+                      {pageNumber}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
               <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    if (page >= totalPages) {
+                      e.preventDefault(); // Prevent action if we're on the last page
+                      return;
+                    }
+                    handlePaginationChange(page + 1);
+                  }}
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
